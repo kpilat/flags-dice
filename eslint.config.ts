@@ -46,7 +46,7 @@ export default defineConfig(
     languageOptions: { globals: globals.browser },
   },
   {
-    files: ['*.{js,mjs,cjs,ts,mts,cts}'],
+    files: ['*.{js,mjs,cjs,ts,mts,cts}', 'integrations/**/*.{js,mjs,ts,mts}'],
     languageOptions: { globals: globals.node },
   },
 

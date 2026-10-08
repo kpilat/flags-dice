@@ -1,6 +1,10 @@
 import { defineConfig, fontProviders } from 'astro/config';
+import serviceWorker from './integrations/service-worker';
 
 export default defineConfig({
+  // Preview gets its own port: the service worker it installs would otherwise take over the
+  // dev server on the same origin and keep serving the old build.
+  server: ({ command }) => ({ port: command === 'preview' ? 4322 : 4321 }),
   fonts: [
     {
       provider: fontProviders.google(),
@@ -20,4 +24,5 @@ export default defineConfig({
       subsets: ['latin', 'latin-ext'],
     },
   ],
+  integrations: [serviceWorker()],
 });
