@@ -1,0 +1,7 @@
+# Build output and generated files
+dist/
+.astro/
+
+# Dependencies and lockfile
+node_modules/
+bun.lock

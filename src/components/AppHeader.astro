@@ -1,0 +1,76 @@
+---
+import { DEFAULT_LANG, LANGS, MESSAGES } from '../i18n';
+import { SITE } from '../lib/site';
+---
+
+<header>
+  <h1>
+    <svg class="flag" aria-hidden="true">
+      <use href="#i-flag"></use>
+    </svg>
+    {SITE.name}
+  </h1>
+  <div class="lang" id="lang" role="group" aria-label={MESSAGES[DEFAULT_LANG]['header.language']}>
+    {LANGS.map((lang) => (
+      <button type="button" data-lang={lang} aria-pressed={lang === DEFAULT_LANG}>
+        {lang.toUpperCase()}
+      </button>
+    ))}
+  </div>
+</header>
+
+<style>
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  h1 {
+    font-family: var(--font-lexend);
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: -0.01em;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .flag {
+    width: 22px;
+    height: 22px;
+    color: var(--amber);
+  }
+
+  .lang {
+    display: flex;
+    border: 1.5px solid var(--line);
+    border-radius: 999px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+
+  .lang button {
+    font: 600 0.78rem/1 var(--font-figtree);
+    letter-spacing: 0.06em;
+    padding: 7px 11px;
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+  }
+
+  /* Keyed on data-ui-lang, not aria-pressed, which can be stale until app.ts runs. */
+  :global(:root[data-ui-lang='sk']) .lang button[data-lang='sk'],
+  :global(:root[data-ui-lang='en']) .lang button[data-lang='en'] {
+    background: var(--amber);
+    color: #24231f;
+  }
+
+  .lang button:focus-visible {
+    outline: 2px solid var(--amber-ink);
+    outline-offset: -2px;
+  }
+</style>

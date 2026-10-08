@@ -1,0 +1,56 @@
+# Flags Dice
+
+A phone web app for a flag card game, in Slovak and English. Draw a flag card, roll the dice
+and answer the category it lands on: country name, capital, continent, number of bordering
+countries, language or currency. Every roll is independent and uniform (crypto-random,
+1/6 per face).
+
+## Stack
+
+- [Astro 7](https://astro.build) (static output) with TypeScript on the `strictest` preset
+- [Bun](https://bun.sh) as package manager and script runner; Astro builds with Vite
+- ESLint (typescript-eslint, eslint-plugin-astro, jsx-a11y) and Prettier (prettier-plugin-astro)
+- Fonts (Lexend, Figtree) downloaded at build time and self-hosted via the Astro Fonts API;
+  the build fails if they cannot be downloaded
+
+## Requirements
+
+- Bun 1.4 (`packageManager` in `package.json`)
+- Node 24 (`.nvmrc`); `bun run` executes the Astro, ESLint and Prettier CLIs with Node
+
+## Commands
+
+| Command                           | Action                                                                    |
+| --------------------------------- | ------------------------------------------------------------------------- |
+| `bun install`                     | Install dependencies (then `astro sync` generates the types in `.astro/`) |
+| `bun run dev`                     | Dev server at `http://localhost:4321/`                                    |
+| `bun run build`                   | Build the site into `dist/`                                               |
+| `bun run preview`                 | Serve the build at `http://localhost:4321/`                               |
+| `bun run check`                   | Type-check `.astro` and `.ts` files (`astro check`)                       |
+| `bun run lint` / `lint:fix`       | Lint with ESLint                                                          |
+| `bun run format` / `format:check` | Format with Prettier                                                      |
+| `bun run verify`                  | `format:check`, `lint` and `check` together                               |
+
+TypeScript is pinned to 6.0: `astro check` and typescript-eslint do not support TypeScript 7 yet.
+
+## Project layout
+
+```text
+src/
+  components/   Astro components (dice, result card, legend, header, icon sprite)
+  i18n/         Interface text (en.json, sk.json) and language settings
+  layouts/      Page shell: <head>, fonts, language bootstrap
+  lib/          Typed data and logic shared by the page and the client script
+  pages/        index.astro
+  scripts/      Client-side TypeScript (dice controller)
+  styles/       Global tokens and base styles
+```
+
+Interface text lives in `src/i18n/en.json` and `src/i18n/sk.json`, and TypeScript checks that
+every key the code uses exists in both. All of it is rendered in both languages; CSS shows the
+one named by `data-ui-lang` on `<html>`. An inline script sets it before the first paint: the
+saved choice, else the browser's language (Slovak for Slovak and Czech), else English. (Not
+`lang`: browser page translation rewrites it, which would show both languages at once.)
+Astro's built-in i18n only covers routing (one URL per language, such as `/en/`). Switching
+would then load another page and lose the round unless it was saved and restored, so the app
+switches in place instead.

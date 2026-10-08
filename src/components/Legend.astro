@@ -1,0 +1,112 @@
+---
+import { CATEGORIES } from '../lib/categories';
+import LocalizedText from './LocalizedText.astro';
+---
+
+<section>
+  <h2>
+    <span>
+      <LocalizedText message="legend.title" />
+    </span>
+    <span class="count">
+      <LocalizedText message="legend.rolls" />: <span id="count">0</span> ·{' '}
+      <button class="reset" id="reset" type="button">
+        <LocalizedText message="legend.reset" />
+      </button>
+    </span>
+  </h2>
+  <ul class="legend" id="legend">
+    {CATEGORIES.map(({ id }) => (
+      <li data-id={id}>
+        <svg aria-hidden="true">
+          <use href={`#i-${id}`} />
+        </svg>
+        <span>
+          <LocalizedText message={`category.${id}.name`} />
+        </span>
+        <b>× 0</b>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  h2 {
+    font: 600 0.72rem/1.2 var(--font-figtree);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    margin: 6px 0 8px;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .count {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
+  }
+
+  .legend {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .legend li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 4px;
+    border-radius: 12px;
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+    font-size: 0.82rem;
+    font-weight: 500;
+    text-align: center;
+    color: var(--ink);
+    transition:
+      border-color 0.2s,
+      background 0.2s;
+  }
+
+  .legend li svg {
+    width: 30px;
+    height: 30px;
+    color: var(--amber);
+  }
+
+  .legend li.hit {
+    border-color: var(--amber);
+    background: var(--amber-soft);
+  }
+
+  .legend li b {
+    font: 500 0.72rem/1 var(--font-figtree);
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .reset {
+    appearance: none;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    font: 600 0.72rem/1.2 var(--font-figtree);
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .reset:focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 2px;
+  }
+</style>

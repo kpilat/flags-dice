@@ -1,0 +1,82 @@
+---
+import AppHeader from '../components/AppHeader.astro';
+import Dice from '../components/Dice.astro';
+import IconSprite from '../components/IconSprite.astro';
+import Legend from '../components/Legend.astro';
+import LocalizedText from '../components/LocalizedText.astro';
+import ResultCard from '../components/ResultCard.astro';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+  <IconSprite />
+  <main class="app">
+    <AppHeader />
+    <Dice />
+    <ResultCard />
+    <button class="throw" id="throw" type="button">
+      <span id="throw-label">
+        <LocalizedText message="dice.roll" />
+      </span>
+    </button>
+    <p class="hint">
+      <LocalizedText message="dice.hint" />
+    </p>
+    <Legend />
+  </main>
+  <script>
+    import '../scripts/app';
+  </script>
+</Layout>
+
+<style>
+  .app {
+    min-height: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 14px 16px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-sizing: border-box;
+  }
+
+  .throw {
+    appearance: none;
+    border: 0;
+    cursor: pointer;
+    font: 700 1.15rem/1 var(--font-lexend);
+    letter-spacing: 0.01em;
+    color: #24231f;
+    background: var(--amber);
+    border-radius: 16px;
+    padding: 18px 20px;
+    box-shadow: 0 4px 0 #b37d00;
+    transition:
+      transform 0.08s,
+      box-shadow 0.08s,
+      opacity 0.2s;
+  }
+
+  .throw:not([aria-disabled='true']):active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #b37d00;
+  }
+
+  .throw[aria-disabled='true'] {
+    opacity: 0.6;
+    cursor: default;
+  }
+
+  .throw:focus-visible {
+    outline: 3px solid var(--ink);
+    outline-offset: 3px;
+  }
+
+  .hint {
+    margin: 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+</style>

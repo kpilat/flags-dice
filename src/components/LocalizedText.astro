@@ -1,0 +1,13 @@
+---
+import { LANGS, MESSAGES, type MessageKey } from '../i18n';
+
+interface Props {
+  message: MessageKey;
+}
+
+const { message } = Astro.props;
+---
+
+{LANGS.map((lang) => (
+  <span lang={lang}>{MESSAGES[lang][message]}</span>
+))}

@@ -1,0 +1,98 @@
+---
+import LocalizedText from './LocalizedText.astro';
+---
+
+<section class="result" id="result" aria-live="polite">
+  <div class="ico">
+    <svg aria-hidden="true">
+      <use id="result-icon" href="#i-flag"></use>
+    </svg>
+  </div>
+  <div class="eyebrow" id="result-eyebrow">
+    <LocalizedText message="result.ready" />
+  </div>
+  <p class="cat" id="result-name">
+    <LocalizedText message="result.start" />
+  </p>
+  <p class="q idle" id="result-question">
+    <LocalizedText message="result.startHint" />
+  </p>
+</section>
+
+<style>
+  .result {
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+    border-radius: 18px;
+    padding: 18px 18px 20px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 4px 16px;
+    align-items: center;
+    min-height: 96px;
+    box-sizing: border-box;
+  }
+
+  .ico {
+    grid-row: span 2;
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    background: var(--amber-soft);
+    color: var(--amber);
+    display: grid;
+    place-items: center;
+  }
+
+  .ico svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .eyebrow {
+    font: 600 0.72rem/1.2 var(--font-figtree);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--amber-ink);
+  }
+
+  .cat {
+    font: 700 1.6rem/1.1 var(--font-lexend);
+    letter-spacing: -0.015em;
+    margin: 2px 0 0;
+    text-wrap: balance;
+  }
+
+  .q {
+    grid-column: 1 / -1;
+    margin: 10px 0 0;
+    font-size: 1.05rem;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+
+  .q.idle {
+    color: var(--muted);
+  }
+
+  .result.pop {
+    animation: pop 0.45s cubic-bezier(0.2, 1.4, 0.4, 1);
+  }
+
+  @keyframes pop {
+    0% {
+      transform: scale(0.94);
+      opacity: 0.4;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .result.pop {
+      animation: none;
+    }
+  }
+</style>

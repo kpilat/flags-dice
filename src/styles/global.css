@@ -1,0 +1,53 @@
+:root {
+  color-scheme: light dark;
+  --ground: #eceee8;
+  --surface: #ffffff;
+  --ink: #24231f;
+  --muted: #6b6a62;
+  --line: #d9dbd2;
+  --amber: #e9a200;
+  --amber-ink: #8a5e00;
+  --amber-soft: #fff3d1;
+  --die: #fffdf6;
+  --die-edge: #e7e0cc;
+  --die-core: #d8cfb6;
+  --shadow: rgba(40, 36, 20, 0.28);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ground: #1a1c19;
+    --surface: #252823;
+    --ink: #eeede6;
+    --muted: #a3a298;
+    --line: #383b34;
+    --amber: #f2b21c;
+    --amber-ink: #f7c84f;
+    --amber-soft: #3a3120;
+    --shadow: rgba(0, 0, 0, 0.6);
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-figtree);
+  font-size: 16px;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+
+/*
+ * Keyed on data-ui-lang, not lang: browser page translation rewrites <html lang>, which would
+ * show every language <LocalizedText> renders.
+ */
+:root[data-ui-lang='sk'] [lang='en'],
+:root[data-ui-lang='en'] [lang='sk'] {
+  display: none !important;
+}
