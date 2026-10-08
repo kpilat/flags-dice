@@ -5,7 +5,7 @@ and answer the category it lands on: country name, capital, continent, number of
 countries, language or currency. Every roll is independent and uniform (crypto-random,
 1/6 per face).
 
-Installable as a PWA and works offline.
+Live: <https://kpilat.github.io/flags-dice/>. Installable as a PWA and works offline.
 
 ## Stack
 
@@ -23,17 +23,17 @@ Installable as a PWA and works offline.
 
 ## Commands
 
-| Command                           | Action                                                                    |
-| --------------------------------- | ------------------------------------------------------------------------- |
-| `bun install`                     | Install dependencies (then `astro sync` generates the types in `.astro/`) |
-| `bun run dev`                     | Dev server at `http://localhost:4321/`                                    |
-| `bun run build`                   | Build the site into `dist/` (including `sw.js`)                           |
-| `bun run preview`                 | Serve the build at `http://localhost:4322/`, with the service worker      |
-| `bun run check`                   | Type-check `.astro` and `.ts` files (`astro check`)                       |
-| `bun run lint` / `lint:fix`       | Lint with ESLint                                                          |
-| `bun run format` / `format:check` | Format with Prettier                                                      |
-| `bun run verify`                  | `format:check`, `lint` and `check` together                               |
-| `bun run generate-pwa-assets`     | Regenerate the app icons from `public/favicon.svg`                        |
+| Command                           | Action                                                                          |
+| --------------------------------- | ------------------------------------------------------------------------------- |
+| `bun install`                     | Install dependencies (then `astro sync` generates the types in `.astro/`)       |
+| `bun run dev`                     | Dev server at `http://localhost:4321/flags-dice/`                               |
+| `bun run build`                   | Build the site into `dist/` (including `sw.js`)                                 |
+| `bun run preview`                 | Serve the build at `http://localhost:4322/flags-dice/`, with the service worker |
+| `bun run check`                   | Type-check `.astro` and `.ts` files (`astro check`)                             |
+| `bun run lint` / `lint:fix`       | Lint with ESLint                                                                |
+| `bun run format` / `format:check` | Format with Prettier                                                            |
+| `bun run verify`                  | `format:check`, `lint` and `check` together                                     |
+| `bun run generate-pwa-assets`     | Regenerate the app icons from `public/favicon.svg`                              |
 
 TypeScript is pinned to 6.0: `astro check` and typescript-eslint do not support TypeScript 7 yet.
 
@@ -62,3 +62,15 @@ switches in place instead.
 
 The service worker precaches the whole app. After a deploy it updates in the background, and
 the next launch runs the new version; an open page is never reloaded mid-game.
+
+## Deployment
+
+`.github/workflows/deploy.yml` checks formatting, lints, type-checks and builds every pull
+request and every push to `main`. Pushes to `main` (and manual runs on `main`) are then
+deployed to GitHub Pages. One-time setup:
+
+1. The repository must be public (GitHub Pages on GitHub Free only serves public repositories).
+2. Settings → Pages → Build and deployment → Source: **GitHub Actions**.
+
+The site lives under `/flags-dice/` (`base` in `astro.config.ts`). If the repository is
+renamed or moved to a custom domain, update `site` and `base` there.
